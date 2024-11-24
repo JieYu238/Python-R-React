@@ -1,0 +1,114 @@
+LungCapData.csv
+
+LungCap	Age	Height	Smoke	Gender	Caesarean
+6.475	6	62.1	no	male	no
+10.125	18	74.7	yes	female	no
+9.55	16	69.7	no	female	yes
+11.125	14	71	no	male	no
+4.8	5	56.9	no	male	no
+6.225	11	58.7	no	female	no
+4.95	8	63.3	no	male	yes
+7.325	11	70.4	no	male	no
+8.875	15	70.5	no	male	no
+6.8	11	59.2	no	male	no
+
+1. import data from csv file
+	data <- read.table(file.choose(), Header = T, sep = ",")
+	
+2. extract attributes
+	names(data)
+	
+3. how many rows and columns
+	dim(data)
+	
+4. show head 6 rows
+	head(data)
+	
+5. show tail 6 rows
+	tail 6 rows
+	
+6. show colonm 2 to 4
+	data[c(2,3,4)]
+
+7. show row 2 to 4
+	data[2:4,]
+	
+8. show rows except from 2 to 4
+	data[-(2:4),]
+	
+9. extract all variables of one attribute
+	data$LungCap
+	
+10. medium
+	mean(data$Age)
+	
+11. extract all variables of one attribute ###no need to use $ sign
+	attach(data)
+	LungCap
+	detach(data)
+	
+12. get data type of attributes, using attach 
+	attach(data)
+	class(LungCap)
+	class(Age)
+	
+13. get category variables of attributes, using attach
+	levels(Smoke)
+	levels(Gender)
+	
+14. get summary info, using attach first
+	summary(data)
+	
+15. convert numberic to category if there only 0 and 1 storing in x
+	x <- c(0,1,1,1,0,0,1,1,0)
+	class(x)		output: numeric
+	summary(x)		output: Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.3333  1.0000  1.0000 
+	x <- as.factor(x)
+	class(x)		output: factor
+	summary(x)		output: 0 1 
+							4 5
+							
+16. calculate mean age for only female, usign attach first
+	mean(Age[Gender=="female"])
+	
+17. create new data only containing female info, using attach first
+	femData <- data[Gender == "female", ]	##do not forget the comma!!!
+	
+	
+18. create new data containing only female with over 15, using attach first
+	femOver15 <- data[Gender=="female" & Age>15, ]	##using &
+	
+
+19. value,logic(TRUE , FALSE), using attach first
+	Age[1:5]		output: [1]  6 18 16 14  5
+	temp <- Age>15
+	temp[1:5]		output: [1] FALSE  TRUE  TRUE FALSE FALSE
+	
+20. value, logic(1 and 0), 
+	temp2 <- as.numeric(Age>15)
+	temp2[1:5]		output: [1] 0 1 1 0 0
+
+21. value, female and smoke
+	femSmoke <- Gender=="female"&Smoke=="yes"
+	femSmoke[1:5]		output: [1] FALSE  TRUE FALSE FALSE FALSE
+
+22. store femSmoke variable to dataTAB
+	MoreData <- cbind(dataTAB, femSmoke)
+	MoreData[1:5,]
+	output:
+	 LungCap Age Height Smoke Gender
+1   6.475   6   62.1    no   male
+2  10.125  18   74.7   yes female
+3   9.550  16   69.7    no female
+4  11.125  14   71.0    no   male
+5   4.800   5   56.9    no   male
+  Caesarean femSmoke
+1        no    FALSE
+2        no     TRUE
+3       yes    FALSE
+4        no    FALSE
+5        no    FALSE
+
+23. remove all data and value
+	rm(list=ls())
