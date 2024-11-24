@@ -1,18 +1,69 @@
-LungCap	Age	Height	Smoke	Gender	Caesarean
-6.475	6	62.1	no	male	no
-10.125	18	74.7	yes	female	no
-9.55	16	69.7	no	female	yes
-11.125	14	71	no	male	no
-4.8	5	56.9	no	male	no
-6.225	11	58.7	no	female	no
-4.95	8	63.3	no	male	yes
-7.325	11	70.4	no	male	no
-8.875	15	70.5	no	male	no
-6.8	11	59.2	no	male	no
-
+	Stock1	Stock2	Stock3	Stock4
+Day1	189.44	1.45	1678	95.65
+Day2	223.22	1.67	1578	98.44
+Day3	167.98	1.55	1689	89.56
+Day4	187.99	1.55	1755	85.78
+Day5	178.46	1.678	1699	87.77
+Day6	169.98	1.55	1678	83.66
+Day7	173.77	NA	1588	79.89
+Day8	178.22	1.67	1699	95.66
+Day9	167.88	1.56	1587	96.44
+Day10	189.55	1.56	1677	95.33
 
 
 1. load image
 	command:	load("FirstProject.Rdata")
 	tool bar:	session|load workspace
 	command: 	load(file.choose())
+	
+
+
+WRITING SCRIPT CODE IN R
+
+Apply function, inside, FUN=FUNCTION
+MARGIN = 1: apply the function row-wise
+MARGIN = 2: apply the function column-wise
+2.	calculate mean
+	when the first column is name, then need add row.names = 1 at the load table part
+	StockData <- read.table(file.choose(), header=T, row.names=1, sep="\t")
+	apply(X=StockData, MARGIN = 2, FUN=mean)	
+	output: Stock1   Stock2   Stock3   Stock4 
+			182.649       NA 1662.800   90.818 
+	apply(X=StockData, MARGIN = 2, FUN=mean, na.rm=T)#remove NA value then calculate
+	output: Stock1   Stock2   Stock3   Stock4 
+			182.649    1.582 1662.800   90.818
+			
+	apply(StockData, 2, mean, na.rm=T)#no need to input X, MARGIN, FUN, get the same output as above
+	colMeans(StockData, na.rm=T)same as above
+3. calculate 20th and 80th percentile for the stock price
+	apply(StockData, 2, FUN = quantile, probs=c(0.2, .80), na.rm=T)
+	output:
+	Stock1 Stock2 Stock3 Stock4
+20% 169.580   1.55 1587.8 85.356
+80% 189.462   1.67 1699.0 95.816
+	
+4.	create a  plot of each column, using a "line"
+	apply(StockData, 2, FUN = plot, type="l")
+	send plot with more arguments
+	apply(StockData, 2, FUN=plot, type="l", main="stock", ylab="Price", xlab="Day")
+	
+5. row sum
+	apply(StockData, 1, FUN = sum, na.rm=T)
+	output:
+	Day1     Day2     Day3     Day4 
+1964.540 1901.330 1948.090 2030.320 
+    Day5     Day6     Day7     Day8 
+1966.908 1933.190 1841.660 1974.550 
+    Day9    Day10 
+1852.880 1963.440 
+
+	rowSums(StockData, na.rm = T)#do the same
+	
+6. plot function with apply function 
+	plot(apply(StockData, 1, FUN = sum, na.rm=T), type="l", ylab="Total Market Value", xlab="Day", main="Market Trend")
+	
+7. points function with apply function with colored points
+	pch value determines the shape of the points plotted on the graph,
+	here pch=16 means the shape of points is solid circle.
+	#add in some nice colored points..
+points(apply(StockData, 1, FUN=sum, na.rm=T), pch=16, col="blue")
