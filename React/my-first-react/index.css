@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+body {
+  background-image: url(./images/react-background.jpg);
+  object-fit: cover;
+}
+nav {
+  display: flex;
+  align-items: center;
+}
+img {
+  width: 100px;
+  margin-right: 5px;
+}
+span {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #61dafb;
+}
+main {
+  color: hsla(0, 0%, 100%, 0.724);
+  padding: 30px 0;
+}
+h1 {
+  margin: 0px auto;
+  text-align: center;
+  font-size: 3rem;
+}
+ul {
+  max-width: 600px;
+  margin: 0 auto;
+  list-style-position: inside;
+}
+li {
+  margin-block: 10px;
+  line-height: 20px;
+  list-style: none;
+  text-align: left;
+}
+li::before {
+  content: "🔵";
+  color: #61dafb;
+  font-size: 0.7rem;
+  position: center;
+  padding-right: 5px;
+}
