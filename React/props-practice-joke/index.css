@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: whitesmoke;
+}
+main {
+  margin: 50px auto;
+  width: 600px;
+}
+.joke-div {
+  margin-bottom: 20px;
+  line-height: 2;
+}
+.setup {
+  font-weight: 800;
+  margin-left: 20px;
+}
+.punchline {
+  margin-left: 20px;
+}
