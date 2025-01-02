@@ -23,3 +23,8 @@ main {
 .punchline {
   margin-left: 20px;
 }
+button {
+  margin-left: 20px;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
