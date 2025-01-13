@@ -13,7 +13,24 @@ export default function Main() {
     "ground beef",
     "tomato paste",
   ]);
-
+  const [recipe, setRecipe] = React.useState("");
+  const recipeSection = React.useRef(null);
+  console.log(recipeSection);
+  React.useEffect(() => {
+    if (recipe !== "" && recipeSection.current !== null) {
+      // recipeSection.current.scrollIntoView();
+      const yCoord =
+        recipeSection.current.getBoundingClientRect().top + window.scrollY;
+      window.scroll({
+        top: yCoord,
+        behavior: "smooth",
+      });
+    }
+  }, [recipe]);
+  async function getRecipe() {
+    const recipeMarkDown = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeMarkDown);
+  }
   function addIngredient(formData) {
     const newIngredient = formData.get("ingredient");
     setIngredients((preIngredients) => [
@@ -21,11 +38,7 @@ export default function Main() {
       newIngredient[0].toUpperCase() + newIngredient.slice(1),
     ]);
   }
-  const [recipe, setRecipe] = React.useState("");
-  async function getRecipe() {
-    const recipeMarkDown = await getRecipeFromMistral(ingredients);
-    setRecipe(recipeMarkDown);
-  }
+
   return (
     <main>
       <form action={addIngredient} className="add-ingredient-form">
@@ -38,7 +51,11 @@ export default function Main() {
         <button>Add ingredient</button>
       </form>
       {ingredients.length > 0 && (
-        <IngredientList ingredients={ingredients} getRecipe={getRecipe} />
+        <IngredientList
+          ref={recipeSection}
+          ingredients={ingredients}
+          getRecipe={getRecipe}
+        />
       )}
       {recipe && <ClaudeRecipe recipe={recipe} />}
     </main>
